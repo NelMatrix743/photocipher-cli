@@ -4,12 +4,11 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "click>=8.3.1",
+    "cryptography>=46.0.3",
+]
 
 [project.scripts]
 photocipher = "photocipher.main:main"
 
-
-# Ensure uv/setuptools finds the package under src/
-[tool.setuptools.packages]
-find = { where = ["src"] }
