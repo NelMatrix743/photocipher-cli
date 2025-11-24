@@ -6,6 +6,7 @@ dist/
 wheels/
 *.egg-info
 activate_venv.txt
+brain_storming.txt
 
 # Virtual environments
 .venv
