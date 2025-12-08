@@ -16,6 +16,7 @@ from queries import (
     ENTRY_RETRIEVAL_QUERY,
     ENTRY_DELETION_QUERY
 )
+from errors import *
 
 
 class DB:
@@ -33,7 +34,7 @@ class DB:
             db_connect.commit()
 
 
-    def _check_table_exists(self, cursor: sql.Cursor) -> None:
+    def _check_table_exists(self, cursor: sql.Cursor) -> bool:
         cursor.execute(
             TABLE_EXISTS_QUERY,
             (DB_FILE_NAME,)
@@ -41,8 +42,23 @@ class DB:
         return (cursor.fetchone()[0] > 0)
 
 
-    def insert(self) -> bool:
-        pass
+    def insert(self, entry: tuple[str, ...]) -> bool:
+        with sql.connect(self.db_path) as conn:
+            self.cursor: sql.Cursor = conn.cursor()
+
+            if not self._check_table_exists(self.cursor):
+                self.cursor.execute(
+                    TABLE_CREATION_QUERY
+                )
+            try:
+                self.cursor.execute(
+                    ENTRY_INSERTION_QUERY,
+                    entry
+                )
+            except: # most likely a duplicate entry scenario
+                raise ENTRY_EXISTS()
+            conn.commit()
+        return True
 
 
     def retrieve(self) -> bool:
@@ -56,6 +72,9 @@ class DB:
 
 # export a general interface
 
-db: DB = DB(AppPathsManager.get_db_path())
+db: DB = DB(
+    DB_FILE_NAME,
+    AppPathsManager.get_db_path()
+)
 
 # eosc
