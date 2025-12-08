@@ -36,8 +36,7 @@ class DB:
 
     def _check_table_exists(self, cursor: sql.Cursor) -> bool:
         cursor.execute(
-            TABLE_EXISTS_QUERY,
-            (self.table_name,)
+            TABLE_EXISTS_QUERY
         )
         return (cursor.fetchone()[0] > 0)
 
@@ -46,10 +45,6 @@ class DB:
         with sql.connect(self.db_path) as conn:
             cursor: sql.Cursor = conn.cursor()
 
-            if not self._check_table_exists(cursor):
-                cursor.execute(
-                    TABLE_CREATION_QUERY
-                )
             try:
                 cursor.execute(
                     ENTRY_INSERTION_QUERY,
@@ -65,12 +60,6 @@ class DB:
         with sql.connect(self.db_path) as conn:
             cursor: sql.Cursor = conn.cursor()
 
-            if not self._check_table_exists(cursor):
-                cursor.execute(
-                    TABLE_CREATION_QUERY
-                )
-                raise ENTRY_NOT_FOUND("Table does not exists")
-            
             cursor.execute(
                 ENTRY_RETRIEVAL_QUERY,
                 (eci_hash,)
@@ -85,12 +74,6 @@ class DB:
         with sql.connect(self.db_path) as conn:
             cursor: sql.Cursor = conn.cursor()
 
-            if not self._check_table_exists(cursor):
-                cursor.execute(
-                    TABLE_CREATION_QUERY
-                )
-                raise CANNOT_DELETE_ENTRY("Table could not be found")
-            
             cursor.execute(
                 ENTRY_DELETION_QUERY,
                 (eci_hash,)
