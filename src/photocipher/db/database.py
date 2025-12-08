@@ -8,7 +8,7 @@
 
 import sqlite3 as sql
 from paths import AppPathsManager
-from const import DB_FILE_NAME
+from const import DB_TABLE_NAME
 from queries import (
     TABLE_CREATION_QUERY,
     TABLE_EXISTS_QUERY,
@@ -37,7 +37,7 @@ class DB:
     def _check_table_exists(self, cursor: sql.Cursor) -> bool:
         cursor.execute(
             TABLE_EXISTS_QUERY,
-            (DB_FILE_NAME,)
+            (DB_TABLE_NAME,)
         )
         return (cursor.fetchone()[0] > 0)
 
@@ -105,7 +105,7 @@ class DB:
 # export a general interface
 
 db: DB = DB(
-    DB_FILE_NAME,
+    DB_TABLE_NAME,
     AppPathsManager.get_db_path()
 )
 
