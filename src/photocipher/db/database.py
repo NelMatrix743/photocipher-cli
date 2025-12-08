@@ -85,19 +85,19 @@ class DB:
         with sql.connect(self.db_path) as conn:
             self.cursor: sql.Cursor = conn.cursor()
 
-        if not self._check_table_exists(self.cursor):
+            if not self._check_table_exists(self.cursor):
+                self.cursor.execute(
+                    TABLE_CREATION_QUERY
+                )
+                raise CANNOT_DELETE_ENTRY("Table could not be found")
+            
             self.cursor.execute(
-                TABLE_CREATION_QUERY
+                ENTRY_DELETION_QUERY,
+                (eci_hash,)
             )
-            raise CANNOT_DELETE_ENTRY("Table could not be found")
-        
-        self.cursor.execute(
-            ENTRY_DELETION_QUERY,
-            (eci_hash,)
-        )
-        conn.commit()
-        if not self.cursor.rowcount: # (count == 0)
-            raise CANNOT_DELETE_ENTRY("Entry does not exist")
+            conn.commit()
+            if not self.cursor.rowcount: # (count == 0)
+                raise CANNOT_DELETE_ENTRY("Entry does not exist")
         return True
 
 
