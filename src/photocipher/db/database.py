@@ -77,7 +77,7 @@ class DB:
             )
             output: tuple[str, ...] | None = self.cursor.fetchone()
             if not output:
-                raise ENTRY_NOT_FOUND("Entry does not exists")
+                raise ENTRY_NOT_FOUND("Entry does not exist")
         return output
 
 
