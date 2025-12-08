@@ -40,12 +40,12 @@ ENTRY_INSERTION_QUERY: str = f"""
 
 
 ENTRY_RETRIEVAL_QUERY: str = f"""
-    SELECT * FROM {DB_TABLE_NAME} WHERE eci_entry_id = ?;
+    SELECT * FROM {DB_TABLE_NAME} WHERE eci_hash = ?;
 """
 
 
 ENTRY_DELETION_QUERY: str = f"""
-    DELETE FROM {DB_TABLE_NAME} WHERE eci_entry_id = ?;
+    DELETE FROM {DB_TABLE_NAME} WHERE eci_hash = ?;
 """
 
 # eosc
