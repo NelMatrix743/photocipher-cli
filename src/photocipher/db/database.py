@@ -44,7 +44,7 @@ class DB:
                     entry
                 )
                 conn.commit()
-            except: # most likely a duplicate entry scenario
+            except sql.IntegrityError: # likely a duplicate entry
                 raise ENTRY_EXISTS("Entry exists in the database")
         return True
 
