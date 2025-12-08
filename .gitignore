@@ -10,3 +10,6 @@ brain_storming.txt
 
 # Virtual environments
 .venv
+
+# VS Code
+.vscode
