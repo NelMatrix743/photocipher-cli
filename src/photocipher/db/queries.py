@@ -12,7 +12,7 @@ from const import DB_TABLE_NAME
 
 TABLE_CREATION_QUERY: str = f"""
     CREATE TABLE IF NOT EXISTS {DB_TABLE_NAME} (
-        eci_entry_id text NOT NULL PRIMARY KEY,
+        eci_hash text NOT NULL PRIMARY KEY,
         cryptographic_key text NOT NULL,
         img_filename text NOT NULL,
         en_img_filename text NOT NULL,
@@ -29,7 +29,7 @@ TABLE_EXISTS_QUERY: str = f"""
 
 ENTRY_INSERTION_QUERY: str = f"""
     INSERT INTO {DB_TABLE_NAME} (
-        eci_entry_id,
+        eci_hash,
         cryptographic_key, 
         img_filename, 
         en_img_filename, 
