@@ -8,8 +8,10 @@
 
 import sqlite3 as sql
 from paths import AppPathsManager
+from const import DB_FILE_NAME
 from queries import (
     TABLE_CREATION_QUERY,
+    TABLE_EXISTS_QUERY,
     ENTRY_INSERTION_QUERY,
     ENTRY_RETRIEVAL_QUERY,
     ENTRY_DELETION_QUERY
@@ -18,8 +20,9 @@ from queries import (
 
 class DB:
 
-    def __init__(self, db_path: str) -> None:
+    def __init__(self, db_name, db_path: str) -> None:
         self.db_path: str = db_path
+        self.db_name: str = db_name
 
         # init DB, commit, && close connection
         with sql.connect(self.db_path) as db_connect:
@@ -28,6 +31,14 @@ class DB:
             # create table
             self.db_cursor.execute(TABLE_CREATION_QUERY)
             db_connect.commit()
+
+
+    def _check_table_exists(self, cursor: sql.Cursor) -> None:
+        cursor.execute(
+            TABLE_EXISTS_QUERY,
+            (DB_FILE_NAME,)
+        )
+        return (cursor.fetchone()[0] > 0)
 
 
     def insert(self) -> bool:
