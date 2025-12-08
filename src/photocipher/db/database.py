@@ -27,10 +27,10 @@ class DB:
 
         # init DB, commit, && close connection
         with sql.connect(self.db_path) as db_connect:
-            self.db_cursor: sql.Cursor = db_connect.cursor()
+            cursor: sql.Cursor = db_connect.cursor()
 
             # create table
-            self.db_cursor.execute(TABLE_CREATION_QUERY)
+            cursor.execute(TABLE_CREATION_QUERY)
             db_connect.commit()
 
 
