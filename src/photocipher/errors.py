@@ -8,15 +8,15 @@
 
 class ENTRY_EXISTS(Exception):
     
-    def __init__(self) -> None:
-        self.message: str = "[ERROR] Entry exists in the database"
+    def __init__(self, message: str) -> None:
+        self.message: str = "[REASON] " + message
         super().__init__(self.message)
 
 
 class ENTRY_NOT_FOUND(Exception):
     
-    def __init__(self) -> None:
-        self.message: str = "[ERROR] Entry could not be retrieved"
+    def __init__(self, message: str) -> None:
+        self.message: str = "[REASON] " + message
         super().__init__(self.message)
 
 
