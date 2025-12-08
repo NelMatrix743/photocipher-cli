@@ -56,13 +56,29 @@ class DB:
                     entry
                 )
             except: # most likely a duplicate entry scenario
-                raise ENTRY_EXISTS()
+                raise ENTRY_EXISTS("Entry exists in the database")
             conn.commit()
         return True
 
 
-    def retrieve(self) -> bool:
-        pass
+    def retrieve(self, eci_hash: str) -> tuple[str, ...] | None:
+        with sql.connect(self.db_path) as conn:
+            self.cursor: sql.Cursor = conn.cursor()
+
+            if not self._check_table_exists(self.cursor):
+                self.cursor.execute(
+                    TABLE_CREATION_QUERY
+                )
+                raise ENTRY_NOT_FOUND("Table does not exists")
+            
+            self.cursor.execute(
+                ENTRY_RETRIEVAL_QUERY,
+                (eci_hash,)
+            )
+            output: tuple[str, ...] | None = self.cursor.fetchone()
+            if not output:
+                raise ENTRY_NOT_FOUND("Entry does not exists")
+        return output
 
 
     def delete(self) -> bool:
