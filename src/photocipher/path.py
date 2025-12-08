@@ -5,7 +5,9 @@
 # Programmer.GitHub.url = https://github.com/NelMatrix743                     #
 ###############################################################################
 
-
+from platformdirs import user_data_dir
+import pathlib as ptlb
+from const import APP_NAME, APP_DEVELOPER
 
 
 class AppPaths:
@@ -15,7 +17,7 @@ class AppPaths:
 
 
 
-# export general instance
+# export a general interface
 
 app_paths: AppPaths = AppPaths()
 
