@@ -21,9 +21,9 @@ from errors import *
 
 class DB:
 
-    def __init__(self, db_name, db_path: str) -> None:
+    def __init__(self, tb_name, db_path: str) -> None:
         self.db_path: str = db_path
-        self.db_name: str = db_name
+        self.table_name: str = tb_name
 
         # init DB, commit, && close connection
         with sql.connect(self.db_path) as db_connect:
@@ -37,7 +37,7 @@ class DB:
     def _check_table_exists(self, cursor: sql.Cursor) -> bool:
         cursor.execute(
             TABLE_EXISTS_QUERY,
-            (DB_TABLE_NAME,)
+            (self.table_name,)
         )
         return (cursor.fetchone()[0] > 0)
 
