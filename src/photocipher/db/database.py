@@ -55,9 +55,9 @@ class DB:
                     ENTRY_INSERTION_QUERY,
                     entry
                 )
+                conn.commit()
             except: # most likely a duplicate entry scenario
                 raise ENTRY_EXISTS("Entry exists in the database")
-            conn.commit()
         return True
 
 
@@ -81,7 +81,7 @@ class DB:
         return output
 
 
-    def delete(self) -> bool:
+    def delete(self, eci_hash: str) -> bool:
         pass
 
 
