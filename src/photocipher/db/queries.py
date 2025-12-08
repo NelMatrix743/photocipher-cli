@@ -22,6 +22,11 @@ TABLE_CREATION_QUERY: str = f"""
 """
 
 
+TABLE_EXISTS_QUERY: str = f"""
+    SELECT count(*) FROM sqlite_master
+    WHERE type='table' AND name={DB_TABLE_NAME};
+"""
+
 ENTRY_INSERTION_QUERY: str = f"""
     INSERT INTO {DB_TABLE_NAME} (
         eci_entry_id,
