@@ -34,13 +34,6 @@ class DB:
             db_connect.commit()
 
 
-    def _check_table_exists(self, cursor: sql.Cursor) -> bool:
-        cursor.execute(
-            TABLE_EXISTS_QUERY
-        )
-        return (cursor.fetchone()[0] > 0)
-
-
     def insert(self, entry: tuple[str, ...]) -> bool:
         with sql.connect(self.db_path) as conn:
             cursor: sql.Cursor = conn.cursor()
