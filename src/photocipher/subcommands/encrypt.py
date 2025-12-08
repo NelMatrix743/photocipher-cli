@@ -1,0 +1,6 @@
+###############################################################################
+# Programmer.name = Nelson Chidi                                              #
+# Programmer.nick_name = Nelmatrix                                            #
+# Programmer.GitHub.user_name = NelMatrix743                                  #
+# Programmer.GitHub.url = https://github.com/NelMatrix743                     #
+###############################################################################
