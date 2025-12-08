@@ -20,9 +20,20 @@ class ENTRY_NOT_FOUND(Exception):
         super().__init__(self.message)
 
 
+class CANNOT_DELETE_ENTRY(Exception):
+
+    def __init__(self, message: str) -> None:
+        self.message: str = "[REASON] " + message
+        super().__init__(self.message)
+
+
 
 # export public ones
 
-__all__: list[str] = ["ENTRY_EXISTS", "ENTRY_NOT_FOUND"]
+__all__: list[str] = [
+    "ENTRY_EXISTS",
+    "ENTRY_NOT_FOUND",
+    "CANNOT_DELETE_ENTRY"
+]
 
 # eosc
