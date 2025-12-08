@@ -44,14 +44,14 @@ class DB:
 
     def insert(self, entry: tuple[str, ...]) -> bool:
         with sql.connect(self.db_path) as conn:
-            self.cursor: sql.Cursor = conn.cursor()
+            cursor: sql.Cursor = conn.cursor()
 
-            if not self._check_table_exists(self.cursor):
-                self.cursor.execute(
+            if not self._check_table_exists(cursor):
+                cursor.execute(
                     TABLE_CREATION_QUERY
                 )
             try:
-                self.cursor.execute(
+                cursor.execute(
                     ENTRY_INSERTION_QUERY,
                     entry
                 )
@@ -63,19 +63,19 @@ class DB:
 
     def retrieve(self, eci_hash: str) -> tuple[str, ...] | None:
         with sql.connect(self.db_path) as conn:
-            self.cursor: sql.Cursor = conn.cursor()
+            cursor: sql.Cursor = conn.cursor()
 
-            if not self._check_table_exists(self.cursor):
-                self.cursor.execute(
+            if not self._check_table_exists(cursor):
+                cursor.execute(
                     TABLE_CREATION_QUERY
                 )
                 raise ENTRY_NOT_FOUND("Table does not exists")
             
-            self.cursor.execute(
+            cursor.execute(
                 ENTRY_RETRIEVAL_QUERY,
                 (eci_hash,)
             )
-            output: tuple[str, ...] | None = self.cursor.fetchone()
+            output: tuple[str, ...] | None = cursor.fetchone()
             if not output:
                 raise ENTRY_NOT_FOUND("Entry does not exist")
         return output
@@ -83,20 +83,20 @@ class DB:
 
     def delete(self, eci_hash: str) -> bool:
         with sql.connect(self.db_path) as conn:
-            self.cursor: sql.Cursor = conn.cursor()
+            cursor: sql.Cursor = conn.cursor()
 
-            if not self._check_table_exists(self.cursor):
-                self.cursor.execute(
+            if not self._check_table_exists(cursor):
+                cursor.execute(
                     TABLE_CREATION_QUERY
                 )
                 raise CANNOT_DELETE_ENTRY("Table could not be found")
             
-            self.cursor.execute(
+            cursor.execute(
                 ENTRY_DELETION_QUERY,
                 (eci_hash,)
             )
             conn.commit()
-            if not self.cursor.rowcount: # (count == 0)
+            if not cursor.rowcount: # (count == 0)
                 raise CANNOT_DELETE_ENTRY("Entry does not exist")
         return True
 
