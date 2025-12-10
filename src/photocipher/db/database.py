@@ -11,7 +11,6 @@ from paths import AppPathsManager
 from const import DB_TABLE_NAME
 from queries import (
     TABLE_CREATION_QUERY,
-    TABLE_EXISTS_QUERY,
     ENTRY_INSERTION_QUERY,
     ENTRY_RETRIEVAL_QUERY,
     ENTRY_DELETION_QUERY
